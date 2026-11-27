@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting </title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #101820;
+    color: white;
+    overflow: hidden;
+}
+
+.metro {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #142c3d, #111);
+    position: relative;
+    overflow: hidden;
+}
+
+.invitation {
+    text-align: center;
+    opacity: 0;
+    transform: scale(.8);
+    transition: 1s;
+    padding: 20px;
+}
+
+.invitation.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+h1 {
+    color: #ff6b9a;
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 15px;
+    font-size: 19px;
+}
+
+.buttons {
+    position: relative;
+    width: min(340px, 90vw);
+    height: 140px;
+    margin: 20px auto;
+}
+
+button {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#yes {
+    background: #16a36a;
+    color: white;
+    position: absolute;
+    left: 5%;
+    top: 25px;
+}
+
+#no {
+    background: #e84358;
+    color: white;
+    position: absolute;
+    right: 5%;
+    top: 25px;
+}
+
+/*.door {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, #253e50, #607582);
+    z-index: 5;
+    transition: transform 2s ease-in-out;
+}
+
+.left {
+    left: 0;
+    border-right: 3px solid #111;
+}
+
+.right {
+    right: 0;
+    border-left: 3px solid #111;
+}
+
+.metro.open .left {
+    transform: translateX(-100%);
+}
+
+.metro.open .right {
+    transform: translateX(100%);
+}*/
+
+/*new door*/
+.door {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+
+    background-image: url("image/metro-doors.png");
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+
+    z-index: 5;
+
+    transition: transform 2.5s ease-in-out;
+}
+
+.left {
+    left: 0;
+    background-position: left center;
+}
+
+.right {
+    right: 0;
+    background-position: right center;
+}
+
+/* Metro door opening animation */
+
+.metro.open .left {
+    transform: translateX(-100%);
+}
+
+.metro.open .right {
+    transform: translateX(100%);
+}
+</style>
+</head>
+
+<body>
+
+<div class="metro" id="metro">
+
+    <div class="invitation" id="invitation">
+        <h1>Hey! </h1>
+
+        <p>Can I meet you at the metro station?</p>
+
+       <!-- <p>📍 Thousand Lights Metro</p>
+        <p>📅 27 November 2026</p>-->
+        <p>⏰ 5:00 PM</p>
+
+        <h3>Waiting for your answer!</h3>
+
+        <div class="buttons" id="buttons">
+            <button id="yes">YES </button>
+            <button id="no">NO </button>
+        </div>
+    </div>
+
+    <div class="door left"></div>
+    <div class="door right"></div>
+
+</div>
+
+<script>
+const metro = document.getElementById("metro");
+const invitation = document.getElementById("invitation");
+
+setTimeout(() => {
+    metro.classList.add("open");
+}, 1000);
+
+setTimeout(() => {
+    invitation.classList.add("show");
+}, 2500);
+
+// NO button escape
+const no = document.getElementById("no");
+const area = document.getElementById("buttons");
+
+function escapeButton() {
+    const maxX = area.clientWidth - no.offsetWidth;
+    const maxY = area.clientHeight - no.offsetHeight;
+
+    no.style.left = Math.random() * maxX + "px";
+    no.style.top = Math.random() * maxY + "px";
+    no.style.right = "auto";
+}
+
+no.addEventListener("pointerenter", escapeButton);
+
+no.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    escapeButton();
+});
+
+// YES button - WhatsApp
+document.getElementById("yes").addEventListener("click", () => {
+
+    const message =
+        "Hi! I'll be waiting for you at 5:00 PM at Thousand Lights Metro. Don't be late! ";
+
+    const phone = "919025466647";
+
+    const whatsappURL =
+    "https://wa.me/" + phone + "?text=" +
+    encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+});
+</script>
+
+</body>
+</html>
